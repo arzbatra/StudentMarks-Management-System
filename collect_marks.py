@@ -18,4 +18,15 @@ def collect_and_save_marks(filename="students.csv"):
             values = input(f"Enter the values in the same order as {titles}: ")
             no_of_students -= 1
             writer.writerow(values.split(","))
-            
+def get_remark(avg):
+    """Return a remark string based on an average marks value."""
+    if avg >= 90:
+        return "Excellent"
+    elif avg >= 75:
+        return "Very Good"
+    elif avg >= 60:
+        return "Good"
+    elif avg >= 40:
+        return "Average"
+    else:
+        return "Needs Improvement"           
