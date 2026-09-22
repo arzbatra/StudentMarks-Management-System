@@ -2,10 +2,7 @@ import os
 import google.generativeai as genai
  
 from collect_marks import load_and_process_marks
- 
-# Set your key as an environment variable instead of hardcoding it:
-#   export GOOGLE_API_KEY="your-key-here"      (Mac/Linux)
-#   set GOOGLE_API_KEY=your-key-here           (Windows)
+
 genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
 model = genai.GenerativeModel("gemini-3.6-flash")
  
