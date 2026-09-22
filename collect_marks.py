@@ -29,4 +29,18 @@ def get_remark(avg):
     elif avg >= 40:
         return "Average"
     else:
-        return "Needs Improvement"           
+        return "Needs Improvement" 
+def load_and_process_marks(filename="students.csv"):
+    """Load the CSV into a DataFrame, add Average_Marks and Remarks columns."""
+    data = pd.read_csv(filename)
+    data.set_index("Name", inplace=True)
+    data["Average_Marks"] = data.mean(axis=1)
+    data["Remarks"] = data["Average_Marks"].apply(get_remark)
+    return data
+ 
+ 
+if __name__ == "__main__":
+    print("Welcome to the marks management system")
+    collect_and_save_marks()
+    data = load_and_process_marks()
+    print(data)          
