@@ -1,10 +1,15 @@
-import os
 import google.generativeai as genai
  
-from collect_marks import load_and_process_marks
-
-genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
-model = genai.GenerativeModel("gemini-3.6-flash")
+from analyze_marks import load_data
+ 
+model = None
+ 
+ 
+def configure_model():
+    """Ask for an API key and set up the Gemini model."""
+    global model
+    genai.configure(api_key=input("Enter Your API Key to get real time analysis of data: "))
+    model = genai.GenerativeModel("gemini-3.6-flash")
  
  
 def ask_questions_about_data(data):
@@ -28,5 +33,6 @@ def ask_questions_about_data(data):
  
  
 if __name__ == "__main__":
-    data = load_and_process_marks()
-    ask_questions_about_data(data)
+    configure_model()
+    student_data = load_data()
+    ask_questions_about_data(student_data)
