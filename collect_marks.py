@@ -1,46 +1,44 @@
 import csv
-import pandas as pd
  
  
-def collect_and_save_marks(filename="students.csv"):
-    """Ask the user for student marks and write them to a CSV file."""
+def collect_marks(filename="students.csv"):
+    """Ask the user for subjects and student marks, and save them to a CSV file."""
+    subjects = ["Name", "Roll Number"]
+    number_of_subjects = int(input("Enter the number of subjects: "))
+    for i in range(number_of_subjects):
+        subject_name = input("Enter the subject name: ")
+        subjects.append(subject_name)
+ 
+    number_of_students = int(input("Enter the number of students: "))
+ 
     with open(filename, "w", newline="") as f:
         writer = csv.writer(f)
+        writer.writerow(subjects)  # write header once
  
-        no_of_students = int(input("Enter the number of students you want to enter: "))
-        no_of_subjects = input(
-            "Enter the name of subjects you want to enter (include Name as a field in your input"
-        )
-        titles = no_of_subjects.split(",")
-        writer.writerow(titles)
+        for student in range(number_of_students):
+            marks = []  # reset for every student
+            name = input("Enter the name of the student: ")
+            roll_number = input("Enter the roll number of the student: ")
+            marks.append(name)
+            marks.append(roll_number)
  
-        while no_of_students > 0:
-            values = input(f"Enter the values in the same order as {titles}: ")
-            no_of_students -= 1
-            writer.writerow(values.split(","))
-def get_remark(avg):
-    """Return a remark string based on an average marks value."""
-    if avg >= 90:
-        return "Excellent"
-    elif avg >= 75:
-        return "Very Good"
-    elif avg >= 60:
-        return "Good"
-    elif avg >= 40:
-        return "Average"
-    else:
-        return "Needs Improvement" 
-def load_and_process_marks(filename="students.csv"):
-    """Load the CSV into a DataFrame, add Average_Marks and Remarks columns."""
-    data = pd.read_csv(filename)
-    data.set_index("Name", inplace=True)
-    data["Average_Marks"] = data.mean(axis=1)
-    data["Remarks"] = data["Average_Marks"].apply(get_remark)
-    return data
+            for i in range(number_of_subjects):
+                while True:
+                    request = (
+                        f"Enter {name}'s marks in {subjects[2 + i]} "
+                        f"(0-100): "
+                    )
+                    mark = int(input(request))
+                    if 0 <= mark <= 100:
+                        marks.append(mark)
+                        break
+                    print("Invalid marks! Please enter a value between 0 and 100.")
+ 
+            writer.writerow(marks)  # write once per student
+ 
+    print(f"Data has been successfully saved to {filename}")
  
  
 if __name__ == "__main__":
-    print("Welcome to the marks management system")
-    collect_and_save_marks()
-    data = load_and_process_marks()
-    print(data)          
+    print("Welcome to the Marks Management System")
+    collect_marks()     
